@@ -1,0 +1,109 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-factory_bot
+
+AllCops:
+  Exclude:
+    - '/**/script/**/*'
+    - '/**/bin/**/*'
+    - '/**/tmp/**/*'
+  TargetRubyVersion: 3.2.2
+  EnabledByDefault: true
+  NewCops: enable
+
+########## Bundler ##########
+
+Bundler/GemComment:
+  Enabled: false
+
+########## Layout ##########
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Layout/FirstHashElementLineBreak:
+  Enabled: false
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - '/**/config/initializers/devise.rb'
+
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: same_line
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+########## Lint ##########
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - '/**/spec/**/*'
+
+Lint/ConstantResolution:
+  Enabled: false
+
+########## Metrics ##########
+
+Metrics/BlockLength:
+  Exclude:
+    - '/**/config/**/*'
+    - '/**/spec/**/*'
+
+########## Style ##########
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Copyright:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/InlineComment:
+  Enabled: false
+
+# Not sure about this one because it's hard to configure
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+
+Style/MissingElse:
+  Enabled: false
+
+Style/TopLevelMethodDefinition:
+  Exclude:
+    - 'bin/**/*'
+
+########## RSpec ##########
+
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - unless
+    - for
+    - когда
+    - который
+    - если
+
+RSpec/ExampleLength:
+  Max: 6
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NestedGroups:
+  Max: 4

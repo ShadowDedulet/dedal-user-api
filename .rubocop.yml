@@ -1,0 +1,39 @@
+inherit_from: ./.rubocop-common.yml
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/BlockLength:
+  AllowedMethods: [resource]
+  Exclude:
+    - 'db/schema.rb'
+
+Metrics/MethodLength:
+  CountAsOne: [array, hash, heredoc, method_call]
+  Exclude:
+    - 'db/migrate/*'
+
+Rails/EnvironmentVariableAccess:
+  AllowReads: true
+
+RSpec/ContextWording:
+  Prefixes:
+    - if
+    - for
+    - unless
+    - when
+    - with
+    - without
+    - где
+    - если
+    - и
+    - когда
+    - которая
+    - которое
+    - которые
+    - который
+  
