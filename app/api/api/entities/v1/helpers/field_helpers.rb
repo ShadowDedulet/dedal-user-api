@@ -11,6 +11,10 @@ module API
             represent({}).as_json
           end
 
+          def boolean
+            Grape::API::Boolean
+          end
+
           def date_time(**args)
             { documentation: { type: DateTime }, format_with: :iso8601 }.merge(**args)
           end

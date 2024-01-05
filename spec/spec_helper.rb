@@ -18,6 +18,8 @@
 
 require_relative 'simplecov_helper'
 
+require 'faker'
+
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 

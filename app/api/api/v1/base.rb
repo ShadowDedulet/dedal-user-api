@@ -22,6 +22,11 @@ module API
 
       mount API::V1::Users
 
+      desc 'Ping', success: { model: API::Entities::V1::Success, message: 'Successfully fetched' }, skip_auth: true
+      get do
+        present success_model.default, with: success_model
+      end
+
       route :any, '*path' do
         raise API::Exceptions::PageNotFound
       end

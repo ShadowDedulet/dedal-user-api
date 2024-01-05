@@ -6,13 +6,15 @@ module API
       module AuthHelpers
         extend ActiveSupport::Concern
 
-        ALGORITHM = 'RS512'
-        public_constant :ALGORITHM
+        COOKIES_KEYS = { jwt: 'resume_access', rt: 'resume_refresh' }.freeze
+        private_constant :COOKIES_KEYS
 
         def authenticate_with_token!
           return if skip_authentication?
 
-          raise(API::Exceptions::Unauthorized) if current_user.blank?
+          current_user
+        rescue OpenSSL::PKey::PKeyError, ActiveRecord::RecordNotFound
+          raise(API::Exceptions::Unauthorized)
         end
 
         def skip_authentication?
@@ -20,32 +22,29 @@ module API
         end
 
         def current_user
+          raise(API::Exceptions::Unauthorized) if access_token.blank?
+
           @current_user ||= begin
-            key = OpenSSL::PKey::RSA.new(Rails.application.credentials.devise_jwt_private_key!).public_key
-            user_data = JWT.decode(token, key, true, algorithm: ALGORITHM).first['user']
-            User.find(user_data['id'])
+            token = AccessToken.decode(access_token)
+            user_id = token.payload.first['id']
+            User.find(user_id)
           end
-        rescue OpenSSL::PKey::PKeyError, ActiveRecord::RecordNotFound
-          raise(API::Exceptions::Unauthorized)
         end
 
-        def token
-          params[:token] || cookies[auth_token_cookie_key]
-          # auth = headers['Authorization'].to_s
-          # auth.split.last
+        def access_token
+          cookies[COOKIES_KEYS[:jwt]]
         end
 
-        def auth_token_cookie_key
-          'resume_token'
+        def refresh_token
+          cookies[COOKIES_KEYS[:rt]]
         end
 
-        def user_to_jwt(user = current_user)
-          key = OpenSSL::PKey::RSA.new(Rails.application.credentials.devise_jwt_private_key!)
-          JWT.encode(jwt_payload(user), key, ALGORITHM)
+        def save_access_token(access_token)
+          cookies[COOKIES_KEYS[:jwt]] = access_token.to_cookie
         end
 
-        def jwt_payload(user)
-          user.as_json
+        def save_refresh_token(refresh_token)
+          cookies[COOKIES_KEYS[:rt]] = refresh_token.to_cookie(version)
         end
       end
     end

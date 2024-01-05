@@ -33,6 +33,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include(Helpers::RequestHelpers)
+  config.include(Helpers::V1::AuthHelpers)
   config.include(FactoryBot::Syntax::Methods)
 
   # Fill in the database with the necessary data.
