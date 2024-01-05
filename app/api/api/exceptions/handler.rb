@@ -6,7 +6,7 @@ module API
       extend ActiveSupport::Concern
 
       included do
-        error_formatter :json, JsonErrorListFormatter
+        error_formatter :json, JsonErrorFormatter
 
         def self.rescue_from(*args, &)
           blk = proc do |ex|
@@ -29,11 +29,8 @@ module API
           error!(e.message, :not_implemented) # 501
         end
 
-        if Rails.env.production?
-          rescue_from StandardError do |e|
-            Rails.logger.error(e)
-            error!(e.message, :internal_server_error) # 500
-          end
+        rescue_from StandardError do |e|
+          error!(e.message, :internal_server_error) # 500
         end
       end
     end
