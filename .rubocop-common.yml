@@ -95,9 +95,6 @@ RSpec/ContextWording:
     - if
     - unless
     - for
-    - когда
-    - который
-    - если
 
 RSpec/ExampleLength:
   Max: 6

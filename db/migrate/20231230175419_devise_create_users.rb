@@ -2,27 +2,27 @@
 
 class DeviseCreateUsers < ActiveRecord::Migration[7.1]
   def change
-    create_table :users, comment: 'Пользователи' do |t|
+    create_table :users, comment: 'Users' do |t|
       ## Database authenticatable
-      t.string :login,              null: false, comment: 'Логин'
-      t.string :username,           null: false, comment: 'Имя пользователя'
-      t.string :email,              null: false, default: '', comment: 'Почта'
+      t.string :login,              null: false, comment: 'Login'
+      t.string :username,           null: false, comment: 'Username'
+      t.string :email,              null: false, default: '', comment: 'E-mail'
 
-      t.string :encrypted_password, null: false, default: '', comment: 'Зашифрованный пароль'
+      t.string :encrypted_password, null: false, default: '', comment: 'Encrypted password'
 
       ## Recoverable
-      t.string   :reset_password_token,   comment: 'Токен восстановления пароля'
-      t.datetime :reset_password_sent_at, comment: 'Дата и время отправки токена восстановления'
+      t.string   :reset_password_token,   comment: 'Reset password token'
+      t.datetime :reset_password_sent_at, comment: 'Date and time reset password token was sent'
 
       ## Rememberable
       # t.datetime :remember_created_at
 
       ## Trackable
-      t.integer  :sign_in_count, default: 0, null: false, comment: 'Кол-во входов в систему'
-      t.datetime :current_sign_in_at,                     comment: 'Дата и время текущего входа в систему'
-      t.datetime :last_sign_in_at,                        comment: 'Дата и время последнего входа в систему'
-      t.string   :current_sign_in_ip,                     comment: 'IP-адрес текущего входа в систему'
-      t.string   :last_sign_in_ip,                        comment: 'IP-адрес последнего входа в систему'
+      t.integer  :sign_in_count, default: 0, null: false, comment: 'Sign in count'
+      t.datetime :current_sign_in_at,                     comment: 'Date and time signing in current session'
+      t.datetime :last_sign_in_at,                        comment: 'Date and time signing in last session'
+      t.string   :current_sign_in_ip,                     comment: 'IP-address signing in current session'
+      t.string   :last_sign_in_ip,                        comment: 'IP-address signing in last session'
 
       ## Confirmable
       # t.string   :confirmation_token
@@ -32,12 +32,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
 
       ## Lockable
       # Only if lock strategy is :failed_attempts
-      t.integer  :failed_attempts, default: 0, null: false, comment: 'Кол-во неудачных попыток входа в систему'
+      t.integer  :failed_attempts, default: 0, null: false, comment: 'Amount of failed attempts'
       # Only if unlock strategy is :email or :both
-      t.string   :unlock_token,                             comment: 'Токен разблокировки УЗ'
-      t.datetime :locked_at,                                comment: 'Дата и время блокировки'
+      t.string   :unlock_token,                             comment: 'Unlock token'
+      t.datetime :locked_at,                                comment: 'Block date and time'
 
-      t.timestamps null: false,                             comment: 'Временные метки'
+      t.timestamps null: false,                             comment: 'Timestamps'
     end
 
     add_index :users, :username

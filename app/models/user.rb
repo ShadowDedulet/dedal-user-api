@@ -18,4 +18,9 @@ class User < ApplicationRecord
   def to_jwt_payload
     as_json(except: ACCESS_PAYLOAD_DENYLIST)
   end
+
+  def sign_out!
+    self.refresh_token = nil
+    save!
+  end
 end

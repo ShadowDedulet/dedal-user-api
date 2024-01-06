@@ -16,24 +16,24 @@ ActiveRecord::Schema[7.1].define(version: 20_240_104_095_753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
-  create_table 'users', comment: 'Пользователи', force: :cascade do |t|
-    t.string 'login', null: false, comment: 'Логин'
-    t.string 'username', null: false, comment: 'Имя пользователя'
-    t.string 'email', default: '', null: false, comment: 'Почта'
-    t.string 'encrypted_password', default: '', null: false, comment: 'Зашифрованный пароль'
-    t.string 'reset_password_token', comment: 'Токен восстановления пароля'
-    t.datetime 'reset_password_sent_at', comment: 'Дата и время отправки токена восстановления'
-    t.integer 'sign_in_count', default: 0, null: false, comment: 'Кол-во входов в систему'
-    t.datetime 'current_sign_in_at', comment: 'Дата и время текущего входа в систему'
-    t.datetime 'last_sign_in_at', comment: 'Дата и время последнего входа в систему'
-    t.string 'current_sign_in_ip', comment: 'IP-адрес текущего входа в систему'
-    t.string 'last_sign_in_ip', comment: 'IP-адрес последнего входа в систему'
-    t.integer 'failed_attempts', default: 0, null: false, comment: 'Кол-во неудачных попыток входа в систему'
-    t.string 'unlock_token', comment: 'Токен разблокировки УЗ'
-    t.datetime 'locked_at', comment: 'Дата и время блокировки'
-    t.datetime 'created_at', null: false, comment: 'Временные метки'
-    t.datetime 'updated_at', null: false, comment: 'Временные метки'
-    t.string 'refresh_token', comment: 'Токен обновления'
+  create_table 'users', comment: 'Users', force: :cascade do |t|
+    t.string 'login', null: false, comment: 'Login'
+    t.string 'username', null: false, comment: 'Username'
+    t.string 'email', default: '', null: false, comment: 'E-mail'
+    t.string 'encrypted_password', default: '', null: false, comment: 'Encrypted password'
+    t.string 'reset_password_token', comment: 'Reset password token'
+    t.datetime 'reset_password_sent_at', comment: 'Date and time reset password token was sent'
+    t.integer 'sign_in_count', default: 0, null: false, comment: 'Sign in count'
+    t.datetime 'current_sign_in_at', comment: 'Date and time signing in current session'
+    t.datetime 'last_sign_in_at', comment: 'Date and time signing in last session'
+    t.string 'current_sign_in_ip', comment: 'IP-address signing in current session'
+    t.string 'last_sign_in_ip', comment: 'IP-address signing in last session'
+    t.integer 'failed_attempts', default: 0, null: false, comment: 'Amount of failed attempts'
+    t.string 'unlock_token', comment: 'Unlock token'
+    t.datetime 'locked_at', comment: 'Block date and time'
+    t.datetime 'created_at', null: false, comment: 'Timestamps'
+    t.datetime 'updated_at', null: false, comment: 'Timestamps'
+    t.string 'refresh_token', comment: 'Refresh token'
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['refresh_token'], name: 'index_users_on_refresh_token', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true

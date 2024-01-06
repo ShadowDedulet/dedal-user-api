@@ -5,13 +5,13 @@ module API
     module V1
       module Users
         class User < Base
-          expose :id,         documentation: { type: Integer, desc: 'Идентификатор'    }
-          expose :login,      documentation: { type: String,  desc: 'Логин'            }
-          expose :email,      documentation: { type: String,  desc: 'Почта'            }
-          expose :username,   documentation: { type: String,  desc: 'Имя пользователя' }
+          expose :id,         documentation: { type: Integer, desc: 'Identifier' }
+          expose :login,      documentation: { type: String,  desc: 'Login'      }
+          expose :email,      documentation: { type: String,  desc: 'E-mail'     }
+          expose :username,   documentation: { type: String,  desc: 'Username'   }
 
-          expose :created_at, date_time(documentation: { desc: 'Дата и время создания'              })
-          expose :updated_at, date_time(documentation: { desc: 'Дата и время последнего обновления' })
+          expose :created_at, date_time(documentation: { desc: 'Creation Date and time'    })
+          expose :updated_at, date_time(documentation: { desc: 'Last update Date and time' })
         end
       end
     end

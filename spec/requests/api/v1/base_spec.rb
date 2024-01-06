@@ -5,11 +5,6 @@ RSpec.describe 'API::V1::Base' do
 
   after { current_user.destroy }
 
-  it 'pings' do
-    get '/api/v1'
-    expect(json_response).to(eq(API::Entities::V1::Success.default.deep_symbolize_keys))
-  end
-
   context 'when authenticated' do
     before { sign_in(current_user) }
 

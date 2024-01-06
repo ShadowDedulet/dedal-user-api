@@ -6,7 +6,6 @@ RSpec.describe 'API::V1::Users' do
   let!(:current_user) { create(:user) }
 
   let(:new_user_attrs)  { attributes_for(:user) }
-  let(:user_attrs_keys) { new_user_attrs.keys   }
 
   describe 'POST /register' do
     it 'creates user' do
@@ -42,7 +41,7 @@ RSpec.describe 'API::V1::Users' do
 
       it 'returns filtered user' do
         user = users.sample
-        filter_key = user_attrs_keys.sample
+        filter_key = new_user_attrs.except(:password).keys.sample
         get url.call, params: { filter_key => user[filter_key] }
 
         expected = factory_to_entity(user, API::Entities::V1::Users::User)
@@ -61,6 +60,19 @@ RSpec.describe 'API::V1::Users' do
       it 'refreshes cookies' do
         post url.call('/refresh')
         expect(response.cookies).not_to(eq(cookies))
+      end
+    end
+
+    describe 'POST /sign_out' do
+      it 'clears refresh token' do
+        post url.call('/sign_out')
+        expect(current_user.reload.refresh_token).to(be_nil)
+      end
+
+      it 'clears cookies' do
+        post url.call('/sign_out')
+        token_cookies = response.cookies.slice(*API::V1::Helpers::AuthHelpers.const_get(:COOKIES_KEYS).values).values
+        expect(token_cookies.uniq).to(eq(['deleted']))
       end
     end
   end

@@ -2,7 +2,7 @@ ARG RUBY_VERSION=3.2.2-alpine3.18
 
 FROM ruby:$RUBY_VERSION as development
 
-RUN apk add --no-cache tzdata git postgresql-dev nano build-base
+RUN apk add --no-cache tzdata git postgresql-dev nano curl build-base
 
 WORKDIR /opt/app
 
@@ -21,7 +21,7 @@ CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 
 FROM ruby:$RUBY_VERSION as production
 
-RUN apk add --no-cache tzdata git postgresql-libs nano
+RUN apk add --no-cache tzdata git postgresql-libs nano curl
 
 WORKDIR /opt/app
 

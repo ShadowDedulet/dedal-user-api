@@ -6,7 +6,7 @@ module API
       module AuthHelpers
         extend ActiveSupport::Concern
 
-        COOKIES_KEYS = { jwt: 'resume_access', rt: 'resume_refresh' }.freeze
+        COOKIES_KEYS = { jwt: 'mucas_access', rt: 'mucas_refresh' }.freeze
         private_constant :COOKIES_KEYS
 
         def authenticate_with_token!
@@ -45,6 +45,11 @@ module API
 
         def save_refresh_token(refresh_token)
           cookies[COOKIES_KEYS[:rt]] = refresh_token.to_cookie(version)
+        end
+
+        def clear_cookies
+          cookies.delete(COOKIES_KEYS[:jwt])
+          cookies.delete(COOKIES_KEYS[:rt])
         end
       end
     end

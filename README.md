@@ -1,5 +1,5 @@
 [![Build status](https://github.com/ShadowDedulet/mucas-user-api/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/ShadowDedulet/mucas-user-api/actions/workflows/test.yml)
-[![Code Coverage](https://raw.githubusercontent.com/ShadowDedulet/mucas-user-api/_xml_coverage_reports/data/workflows_coverage/badge.svg?branch=master)](https://github.com/ShadowDedulet/mucas-user-api/actions/workflows/test.yml)
+[![Code Coverage](https://raw.githubusercontent.com/ShadowDedulet/mucas-user-api/_xml_coverage_reports/data/master/badge.svg)](https://github.com/ShadowDedulet/mucas-user-api/actions/workflows/test.yml)
 
 # User API
 
@@ -21,7 +21,7 @@ docker-compose up app
 
 UI: http://localhost:3000/swagger
 
-JSON-схема: http://localhost:3000/api/swagger_doc.json
+JSON-schema: http://localhost:3000/api/swagger_doc.json
 
 ## Tests
 
