@@ -1,49 +1,106 @@
 name: test
 
 on:
-  push:
-    branches:
-      - "*"
   pull_request:
     branches:
       - "*"
     types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+
+env:
+  RAILS_ENV: "test"
+  COVERAGE: "true"
+  SERVICE_NAME: "user_api"
+  HOSTNAME: "user-api"
+  SEMANTIC_LOG_FORMAT: "plain"
+  DATABASE_URL: "postgres://postgres@localhost:5432"
+  DATABASE_PASSWORD: "password"
 
 jobs:
   lint:
     name: RuboCop
-    timeout-minutes: 30
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Alpine Linux
+        uses: jirutka/setup-alpine@v1
+        with:
+          branch: v3.18
+          packages: >
+            tzdata
+            git
+            postgresql-dev
+            ruby
+            ruby-dev
+            make
+            musl-dev
+            yaml-dev
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2.2"
-          bundler-cache: true
+      - name: Install Bundler
+        run: gem install bundler
+        shell: alpine.sh --root {0}
+
+      - name: Install dependencies
+        run: bundle install
+        shell: alpine.sh --root {0}
 
       - name: Run RuboCop
         run: bundle exec rubocop
+        shell: alpine.sh {0}
+
   test:
     name: Rspec
-    timeout-minutes: 30
+    timeout-minutes: 5
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
+      - name: Setup Alpine Linux
+        uses: jirutka/setup-alpine@v1
+        with:
+          branch: v3.18
+          packages: >
+            tzdata
+            git
+            postgresql-dev
+            ruby
+            ruby-dev
+            make
+            musl-dev
+            yaml-dev
+            tree
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install packages
-        run: |
-          sudo apt-get update -q
-          sudo apt-get install tzdata git postgresql-dev nano -y
+      - name: Install Bundler
+        run: gem install bundler
+        shell: alpine.sh --root {0}
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2.2"
-          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+        shell: alpine.sh --root {0}
+
+      - name: Prepare DB
+        run: RAILS_ENV=test rails db:prepare
+        shell: alpine.sh --root {0}
 
       - name: Run tests
-        run: COVERAGE=true bundle exec rspec
+        run: bundle exec rspec
+        shell: alpine.sh {0}

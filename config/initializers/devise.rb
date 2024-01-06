@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'devise'
+
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -14,11 +16,11 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ebf4483b22a2d022d77fafd6946f01b14b3fbd76059f11d195bd373e17e56b8566ab0236acdb5971ecd865d3ed9b5f04850eeb33aa05d8a43ee8aa0ab90def77'
+  config.secret_key = 'ebf4483b22a2d022d77fafd6946f01b14b3fbd76059f11d195bd373e17e56b8566ab0236acdb5971ecd865d3ed9b5f04850eeb33aa05d8a43ee8aa0ab90def77'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'DeviseController'
+  config.parent_controller = 'API::Base'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

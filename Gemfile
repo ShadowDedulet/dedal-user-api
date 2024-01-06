@@ -24,8 +24,7 @@ gem 'bootsnap', '~> 1.17', require: false
 gem 'rails_semantic_logger', '~> 4.14'
 
 # Authorization
-gem 'devise', '~> 4.9.3'
-gem 'devise-jwt', '~> 0.11.0'
+gem 'devise', '~> 4.9.3', require: false
 gem 'jwt', '~> 2.7.1'
 
 # Grape + Swagger

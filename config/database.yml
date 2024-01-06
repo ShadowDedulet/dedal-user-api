@@ -3,6 +3,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  url: <%= ENV["DATABASE_URL"] %>
   host: <%= ENV["DATABASE_HOST"] %>
   port: <%=  ENV.fetch('DATABASE_PORT', 5432) %>
   username: <%= ENV["DATABASE_USERNAME"] %>

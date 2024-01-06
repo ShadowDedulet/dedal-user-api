@@ -9,13 +9,13 @@ class AccessToken
 
   def self.decode(token)
     token = token.try(:[], :value) unless token.is_a?(String)
-    key = OpenSSL::PKey::RSA.new(Rails.application.credentials.devise_jwt_private_key!).public_key
+    key = OpenSSL::PKey::RSA.new(Rails.application.credentials.jwt_private_key!).public_key
     payload = JWT.decode(token, key, true, algorithm: ALGORITHM)
     new(token, payload)
   end
 
   def self.encode(payload)
-    key = OpenSSL::PKey::RSA.new(Rails.application.credentials.devise_jwt_private_key!)
+    key = OpenSSL::PKey::RSA.new(Rails.application.credentials.jwt_private_key!)
     token = JWT.encode(payload, key, ALGORITHM)
     new(token, payload)
   end
