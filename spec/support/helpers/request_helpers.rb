@@ -15,7 +15,7 @@ module Helpers
     end
 
     def factory_to_entity(factory_instance, entity_klass)
-      js = entity_klass.represent(factory_instance).as_json.deep_symbolize_keys
+      js = JSON.parse(JSON.dump(entity_klass.represent(factory_instance)), symbolize_names: true)
       js = js[:data] if entity_klass.default.key?('data')
       js
     end

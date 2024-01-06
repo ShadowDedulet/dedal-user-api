@@ -31,6 +31,8 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 #   abort e.to_s.strip
 # end
 
+STUBBED_JWT_KEY = OpenSSL::PKey::RSA.generate(1024)
+
 RSpec.configure do |config|
   config.include(Helpers::RequestHelpers)
   config.include(Helpers::V1::AuthHelpers)
@@ -39,6 +41,11 @@ RSpec.configure do |config|
   # Fill in the database with the necessary data.
   config.before :suite do
     Rails.application.load_seed
+
+    config.before do
+      allow(Rails.application.credentials).to(receive_messages(jwt_private_key!: STUBBED_JWT_KEY.to_s,
+                                                               jwt_public_key:   STUBBED_JWT_KEY.public_key.to_s))
+    end
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
