@@ -50,11 +50,7 @@ module UserAPI
                         { request_id: :request_id }
                       end
 
-    config.hosts = [
-      'dedal-nginx',
-      'localhost',
-      '127.0.0.1'
-    ]
+    config.hosts = ['dedal-nginx', 'www.example.com', 'localhost']
 
     # Configuration for the application, engines, and railties goes here.
     #
