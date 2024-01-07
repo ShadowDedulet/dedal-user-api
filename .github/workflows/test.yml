@@ -12,7 +12,7 @@ on:
 env:
   RAILS_ENV: "test"
   COVERAGE: "true"
-  SERVICE_NAME: "user_api"
+  SERVICE_NAME: "user-api"
   HOSTNAME: "user-api"
   SEMANTIC_LOG_FORMAT: "plain"
   DATABASE_URL: "postgres://postgres@localhost:5432"
