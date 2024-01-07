@@ -13,7 +13,7 @@ module API
 
     add_swagger_documentation \
       info:             {
-        title:       'MUCAS: User API',
+        title:       'Dedal: User API',
         description: 'API for managing users and their sessions',
         skip_auth:   'Accessible without authorization'
       },

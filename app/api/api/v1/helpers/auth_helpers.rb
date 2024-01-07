@@ -6,7 +6,7 @@ module API
       module AuthHelpers
         extend ActiveSupport::Concern
 
-        COOKIES_KEYS = { jwt: 'mucas_access', rt: 'mucas_refresh' }.freeze
+        COOKIES_KEYS = { jwt: 'dedal_access', rt: 'dedal_refresh' }.freeze
         private_constant :COOKIES_KEYS
 
         def authenticate_with_token!

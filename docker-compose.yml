@@ -1,12 +1,13 @@
 version: "3.7"
+
 services:
   app: &app
-    container_name: user_api-app
+    container_name: user-api
     build:
       context: .
       target: development
     volumes:
-      - .:/opt/app
+      - ./:/opt/app
     tmpfs:
       - /opt/app/tmp/cache
     tty: true
@@ -17,6 +18,10 @@ services:
       - db
     env_file:
       - .env
+    networks:
+      default:
+        aliases:
+          - user-api
     healthcheck:
       test: ["CMD", "curl", "-fLI", "http://localhost:3000/api/ping.json"]
       interval: 30s
@@ -25,7 +30,7 @@ services:
       start_period: 30s
 
   db:
-    container_name: db-user_api
+    container_name: db-user-api
     image: postgres:alpine3.18
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -38,6 +43,18 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+
+  nginx:
+    container_name: nginx-user-api
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      default:
+        aliases:
+          - nginx
 
 volumes:
   postgres:

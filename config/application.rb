@@ -41,7 +41,7 @@ module UserAPI
     config.semantic_logger.add_appender(
       io:          $stdout,
       formatter:   config.rails_semantic_logger.format,
-      application: :user_api)
+      application: :'user-api')
 
     # Prepend all log lines with the following tags.
     config.log_tags = if ENV['SEMANTIC_LOG_FORMAT'] == 'plain'
@@ -49,6 +49,8 @@ module UserAPI
                       else
                         { request_id: :request_id }
                       end
+
+    config.hosts = ['dedal-nginx', 'www.example.com', 'localhost']
 
     # Configuration for the application, engines, and railties goes here.
     #
